@@ -550,11 +550,31 @@ textarea {
 .ingredient-photo {
   display: block;
   height: 100%;
-  object-fit: contain;
-  object-position: center;
-  padding: 6px;
+  object-fit: cover;
+  object-position: var(--ingredient-focus, center center);
+  padding: 0;
   width: 100%;
 }
+
+.ingredient-card:has([src$="base_quinoa.jpg"]) { --ingredient-focus: center 48%; }
+.ingredient-card:has([src$="base_germ.jpg"]) { --ingredient-focus: center 48%; }
+.ingredient-card:has([src$="base_pasta.jpg"]) { --ingredient-focus: center 50%; }
+.ingredient-card:has([src$="base_lettuce.jpg"]) { --ingredient-focus: center 50%; }
+.ingredient-card:has([src$="protein_salmon.jpg"]) { --ingredient-focus: center 52%; }
+.ingredient-card:has([src$="protein_smoked_salmon.jpg"]) { --ingredient-focus: center 52%; }
+.ingredient-card:has([src$="protein_chicken.jpg"]) { --ingredient-focus: center 48%; }
+.ingredient-card:has([src$="protein_pork.jpg"]) { --ingredient-focus: center 52%; }
+.ingredient-card:has([src$="protein_shrimp.jpg"]) { --ingredient-focus: center 48%; }
+.ingredient-card:has([src$="protein_egg.jpg"]) { --ingredient-focus: center 50%; }
+.ingredient-card:has([src$="protein_tofu.jpg"]) { --ingredient-focus: center 50%; }
+.ingredient-card:has([src$="topping_tomato.jpg"]) { --ingredient-focus: center 50%; }
+.ingredient-card:has([src$="topping_dragonfruit.jpg"]) { --ingredient-focus: center 50%; }
+.ingredient-card:has([src$="topping_pumpkin.jpg"]) { --ingredient-focus: center 50%; }
+.ingredient-card:has([src$="topping_sweetpotato.jpg"]) { --ingredient-focus: center 50%; }
+.ingredient-card:has([src$="topping_corn.jpg"]) { --ingredient-focus: center 50%; }
+.ingredient-card:has([src$="topping_edamame.jpg"]) { --ingredient-focus: center 50%; }
+.ingredient-card:has([src$="topping_seaweedsalad.jpg"]) { --ingredient-focus: center 52%; }
+.ingredient-card:has([src$="topping_cabbage.jpg"]) { --ingredient-focus: center 52%; }
 
 .ingredient-icon {
   background: #ffffff;
@@ -1812,9 +1832,9 @@ body.cart-open {
   .ingredient-photo {
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important;
-    object-position: center !important;
-    padding: 4px !important;
+    object-fit: cover !important;
+    object-position: var(--ingredient-focus, center center) !important;
+    padding: 0 !important;
   }
 
   .ingredient-icon {
