@@ -541,7 +541,7 @@ textarea {
 }
 
 .ingredient-image {
-  background: #f7f0df;
+  background: linear-gradient(180deg, #fffaf0 0%, #f7f0df 100%);
   height: 130px;
   overflow: hidden;
   position: relative;
@@ -550,7 +550,9 @@ textarea {
 .ingredient-photo {
   display: block;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
+  padding: 6px;
   width: 100%;
 }
 
@@ -1810,7 +1812,9 @@ body.cart-open {
   .ingredient-photo {
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    padding: 4px !important;
   }
 
   .ingredient-icon {
