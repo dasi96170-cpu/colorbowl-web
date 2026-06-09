@@ -346,7 +346,6 @@
     }
 
     const isMobileLayout = window.matchMedia("(max-width: 700px)").matches;
-    const shouldStayOnBuilder = isMobileLayout || event?.currentTarget?.dataset.addCartMode === "stay";
     const picked = getPickedItems();
     const totals = calculateTotals(picked);
     const note = document.querySelector("[data-note]").value.trim();
@@ -374,8 +373,7 @@
     saveSelectedToStorage();
     updateAll();
     renderCart();
-    if (shouldStayOnBuilder) closeMobileSummary();
-    if (!shouldStayOnBuilder) openCart();
+    if (isMobileLayout || event?.currentTarget?.dataset.addCartMode === "stay") closeMobileSummary();
   }
 
   function validateCurrentBowl() {
