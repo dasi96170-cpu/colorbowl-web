@@ -86,6 +86,7 @@
   let toastTimer = 0;
 
   const byId = new Map(ingredients.map((item) => [item.id, item]));
+  const byName = new Map(ingredients.map((item) => [item.name, item]));
   const stepById = new Map(steps.map((step) => [step.id, step]));
 
   document.addEventListener("DOMContentLoaded", init);
@@ -96,14 +97,82 @@
     renderPresets();
     renderIngredients();
     bindActions();
+    const lineBotApplied = applyLineBotRecommendation();
     const hasSavedBowl = localStorage.getItem("colorbowl_current_bowl");
-    if (hasSavedBowl) {
+    if (lineBotApplied) {
+      saveSelectedToStorage();
+    } else if (hasSavedBowl) {
       loadSelectedFromStorage();
     } else {
       applyPreset(presets[0], false);
     }
     updateAll();
     renderCart();
+  }
+
+  function applyLineBotRecommendation() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("source") !== "linebot") return false;
+
+    const rawItems = params.get("items") || "";
+    const itemIds = rawItems
+      .split(/[,|]/)
+      .map((item) => normalizeLineBotItem(item))
+      .filter(Boolean);
+
+    if (!itemIds.length) return false;
+
+    selected.clear();
+    itemIds.forEach((id) => {
+      const item = byId.get(id);
+      const step = item ? stepById.get(item.group) : null;
+      if (!item || !step) return;
+
+      const groupItems = selected.get(item.group) || [];
+      if (groupItems.length < step.max) selected.set(item.group, [...groupItems, id]);
+    });
+
+    editingId = "";
+    const noteArea = document.querySelector("[data-note]");
+    if (noteArea) noteArea.value = params.get("note") || "LINE Bot AI 推薦餐盒";
+
+    if (params.get("autoAdd") === "1") {
+      addLineBotBowlToCart();
+      selected.clear();
+      if (noteArea) noteArea.value = "";
+    }
+
+    window.history.replaceState({}, document.title, `${window.location.pathname}${window.location.hash}`);
+    return true;
+  }
+
+  function normalizeLineBotItem(value) {
+    const text = decodeURIComponent(String(value || "")).trim();
+    if (!text) return "";
+    if (byId.has(text)) return text;
+    return byName.get(text)?.id || "";
+  }
+
+  function addLineBotBowlToCart() {
+    const validation = validateCurrentBowl();
+    if (validation) {
+      showToast(validation);
+      return;
+    }
+
+    const picked = getPickedItems();
+    const totals = calculateTotals(picked);
+    const note = document.querySelector("[data-note]")?.value.trim() || "";
+    cart.push({
+      id: `linebot-${Date.now()}`,
+      name: "AI 推薦彩碗",
+      selected: serializeSelection(),
+      note,
+      totals
+    });
+
+    saveCartToStorage();
+    showToast("LINE Bot 推薦餐盒已加入購物車。");
   }
 
   function bindActions() {
