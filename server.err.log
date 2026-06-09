@@ -1,0 +1,71 @@
+127.0.0.1 - - [09/Jun/2026 14:55:04] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [09/Jun/2026 14:58:02] "GET /index.html HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:29] "GET /index.html HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:29] "GET /gtag.js HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:29] "GET /css/normalize.css HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:29] "GET /css/animate.min.css HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:29] "GET /js/jquery-1.11.3.min.js HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:29] "GET /js/jquery.easing.1.3.js HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:29] "GET /css/menu.css HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:29] "GET /css/menu_v3_2023.css HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:29] "GET /css/swiper-bundle.min.css HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:29] "GET /css/custom.css?v=20260609_3 HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:29] "GET /css/all.css HTTP/1.1" 304 -
+10.192.58.27 - - [09/Jun/2026 14:58:29] "GET /js/jquery.mmenu.all.js HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:29] "GET /js/swiper-bundle.min.js HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:29] "GET /images/nav_logo_colorbowl_new.png HTTP/1.1" 304 -
+10.192.58.27 - - [09/Jun/2026 14:58:32] "GET /images/new_logo_transparent.png HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:32] "GET /js/main.js HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:32] "GET /js/menu_v3_2023.js HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:32] "GET /images/test_line_icon.png HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:33] "GET /images/new_logo.png HTTP/1.1" 304 -
+10.192.58.27 - - [09/Jun/2026 14:58:34] "GET /index.html HTTP/1.1" 304 -
+10.192.58.27 - - [09/Jun/2026 14:58:36] "GET /index.html HTTP/1.1" 304 -
+10.192.58.27 - - [09/Jun/2026 14:58:40] "GET /order.html HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:40] "GET /css/order.css?v=20260609_8 HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:40] "GET /js/order.js?v=20260609_2 HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:44] "GET /franchise.html HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:47] "GET /news.html HTTP/1.1" 200 -
+10.192.58.27 - - [09/Jun/2026 14:58:51] "GET /location.html HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('10.192.58.27', 34288)
+----------------------------------------
+Exception occurred during processing of request from ('10.192.58.27', 49178)
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "C:\Users\賴駿富\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\賴駿富\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\http\server.py", line 1325, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "C:\Users\賴駿富\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\http\server.py", line 675, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\賴駿富\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\賴駿富\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\socketserver.py", line 691, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\賴駿富\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\http\server.py", line 1325, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "C:\Users\賴駿富\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\http\server.py", line 675, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\Users\賴駿富\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\socketserver.py", line 755, in __init__
+    self.handle()
+  File "C:\Users\賴駿富\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\http\server.py", line 440, in handle
+    self.handle_one_request()
+  File "C:\Users\賴駿富\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\http\server.py", line 408, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\賴駿富\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\socket.py", line 718, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\賴駿富\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\http\server.py", line 440, in handle
+    self.handle_one_request()
+  File "C:\Users\賴駿富\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\http\server.py", line 408, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\賴駿富\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\socket.py", line 718, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] 遠端主機已強制關閉一個現存的連線。
+----------------------------------------
+ConnectionResetError: [WinError 10054] 遠端主機已強制關閉一個現存的連線。
+----------------------------------------

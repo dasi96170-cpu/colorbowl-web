@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>彩碗 ColorBowl Poke | 線上點餐</title>
+  <link rel="shortcut icon" href="images/new_logo.png">
+  <link rel="stylesheet" href="css/all.css">
+  <link rel="stylesheet" href="css/order.css?v=20260609_8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Anton+SC&display=swap');
+
+    /* ==========================================================================
+       彩碗頂部大數字頁籤導覽列 (ColorBowl Top Tabs Navigation - 點餐頁專用)
+       ========================================================================== */
+    .colorbowl-top-tabs {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        border-bottom: 2px solid #e1e8db;
+        position: relative;
+        z-index: 99;
+        margin-top: 0 !important;
+    }
+
+    .colorbowl-top-tabs .tabs-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-around;
+        align-items: stretch;
+        padding: 15px 10px;
+    }
+
+    .colorbowl-top-tabs .tab-item {
+        flex: 1;
+        text-align: center;
+        padding: 10px 15px;
+        text-decoration: none !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        margin: 0 10px;
+        background: transparent;
+        transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        border: 1px solid transparent;
+    }
+
+    /* 大數字色彩 */
+    .colorbowl-top-tabs .tab-num {
+        font-family: "Anton SC", "Impact", "Montserrat", sans-serif;
+        font-size: 46px;
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 4px;
+        transition: all 0.3s ease;
+    }
+
+    .colorbowl-top-tabs .tab-num.num-1 { color: #f5b932; }
+    .colorbowl-top-tabs .tab-num.num-2 { color: #f37021; }
+    .colorbowl-top-tabs .tab-num.num-3 { color: #fa7e7e; }
+    .colorbowl-top-tabs .tab-num.num-4 { color: #92d050; }
+    .colorbowl-top-tabs .tab-num.num-5 { color: #859e78; }
+
+    /* 英文大寫 */
+    .colorbowl-top-tabs .tab-en {
+        font-family: "Montserrat", "Jost", sans-serif;
+        font-size: 16px;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: #173D34;
+        margin-bottom: 2px;
+        transition: all 0.3s ease;
+    }
+
+    /* 中文說明 */
+    .colorbowl-top-tabs .tab-zh {
+        font-family: "Noto Sans TC", sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        color: #555555;
+        transition: all 0.3s ease;
+    }
+
+    /* Hover 微動畫與卡片上升效果 */
+    .colorbowl-top-tabs .tab-item:hover {
+        transform: translateY(-5px);
+        background: rgba(23, 61, 52, 0.03);
+        box-shadow: 0 6px 15px rgba(23, 61, 52, 0.08);
+        border-color: rgba(23, 61, 52, 0.08);
+    }
+
+    .colorbowl-top-tabs .tab-item:hover .tab-num {
+        transform: scale(1.12);
+    }
+
+    .colorbowl-top-tabs .tab-item:hover .tab-en {
+        color: #0b221d;
+    }
+
+    /* Active 狀態（當前頁面高亮） */
+    .colorbowl-top-tabs .tab-item.active {
+        background: rgba(23, 61, 52, 0.05);
+        border-color: rgba(23, 61, 52, 0.15);
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    .colorbowl-top-tabs .tab-item.active::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        width: 60%;
+        height: 4px;
+        background: #173D34;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .colorbowl-top-tabs .tab-item.active .tab-zh {
+        font-weight: 700;
+        color: #173D34;
+    }
+
+    /* RWD 響應式調整 */
+    @media screen and (max-width: 992px) {
+        .colorbowl-top-tabs .tabs-inner {
+            padding: 10px 5px;
+        }
+        .colorbowl-top-tabs .tab-item {
+            margin: 0 5px;
+            padding: 8px 10px;
+        }
+        .colorbowl-top-tabs .tab-num {
+            font-size: 36px;
+        }
+        .colorbowl-top-tabs .tab-en {
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .colorbowl-top-tabs {
+            overflow: hidden;
+            scrollbar-width: none;
+            margin-top: 0 !important;
+            max-width: 100vw;
+        }
+        
+        .colorbowl-top-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .colorbowl-top-tabs .tabs-inner {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 5px;
+            width: 100%;
+            max-width: 100vw;
+            justify-content: stretch;
+            padding: 8px;
+        }
+
+        .colorbowl-top-tabs .tab-item {
+            flex: none;
+            min-width: 0;
+            margin: 0;
+            padding: 7px 3px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(23, 61, 52, 0.08);
+            border-radius: 10px;
+        }
+        
+        .colorbowl-top-tabs .tab-num {
+            font-size: 22px;
+            margin-bottom: 2px;
+        }
+        
+        .colorbowl-top-tabs .tab-en {
+            font-size: 8px;
+            letter-spacing: 0.2px;
+            line-height: 1.05;
+            margin-bottom: 1px;
+        }
+        
+        .colorbowl-top-tabs .tab-zh {
+            font-size: 10px;
+            letter-spacing: 0;
+            line-height: 1.15;
+        }
+
+        .colorbowl-top-tabs .tab-item:hover {
+            transform: none;
+        }
+    }
+    
+    /* 強制手機版食材卡片雙欄與適當比例（防止快取問題） */
+    @media screen and (max-width: 700px) {
+        html, body {
+            max-width: 100vw !important;
+            overflow-x: hidden !important;
+            width: 100% !important;
+        }
+        .order-page,
+        .builder-layout,
+        .ingredient-panel,
+        .summary-panel {
+            max-width: 100vw !important;
+            overflow-x: hidden !important;
+            width: 100% !important;
+            min-width: 0 !important;
+        }
+        .builder-layout,
+        .ingredient-panel,
+        .summary-panel {
+            max-width: 100% !important;
+            width: 100% !important;
+        }
+        .ingredient-grid {
+            display: grid !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 10px !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            width: 100% !important;
+        }
+        .ingredient-card {
+            display: flex !important;
+            flex-direction: column !important;
+            min-height: 0 !important;
+            width: auto !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+        }
+        .step-tabs {
+            display: flex !important;
+            flex-wrap: wrap !important;
+            gap: 8px !important;
+            margin: 0 0 16px !important;
+            overflow: visible !important;
+            padding: 0 !important;
+            width: 100% !important;
+        }
+        .step-tab {
+            flex: 1 1 calc(33.333% - 8px) !important;
+            min-width: 0 !important;
+            padding: 8px 6px !important;
+        }
+        .ingredient-image {
+            height: 115px !important;
+            width: 100% !important;
+        }
+        .ingredient-photo {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+        }
+    }
+
+    @media screen and (max-width: 430px) {
+        .order-page {
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+        .quick-panel,
+        .ingredient-panel,
+        .summary-panel {
+            padding: 14px;
+        }
+        .step-tabs {
+            gap: 7px !important;
+        }
+        .step-tab {
+            flex-basis: calc(50% - 7px) !important;
+            min-height: 40px;
+        }
+        .step-tab:last-child {
+            flex-basis: 100% !important;
+        }
+        .ingredient-grid {
+            gap: 8px !important;
+        }
+        .ingredient-body {
+            padding: 8px 7px 10px;
+        }
+    }
+
+    @media screen and (max-width: 700px) {
+        .summary-panel[data-mobile-bowl-details] {
+            max-width: none !important;
+            width: auto !important;
+        }
+    }
+  </style>
+  <script src="js/order.js?v=20260609_2" defer></script>
+</head>
+<body>
+  <header class="order-topbar">
+    <a class="brand" href="index.html" aria-label="回到首頁">
+      <img src="images/nav_logo_colorbowl_new.png" alt="ColorBowl Poke">
+    </a>
+  </header>
+
+  <!-- 彩碗頂部大數字導覽頁籤 -->
+  <div class="colorbowl-top-tabs">
+    <div class="tabs-inner">
+      <a href="index.html" class="tab-item" id="tab-about">
+        <span class="tab-num num-1">1</span>
+        <span class="tab-en">ABOUT</span>
+        <span class="tab-zh">品牌介紹</span>
+      </a>
+      <a href="order.html" class="tab-item active" id="tab-dish">
+        <span class="tab-num num-2">2</span>
+        <span class="tab-en">MIX & MATCH</span>
+        <span class="tab-zh">自由搭配</span>
+      </a>
+      <a href="franchise.html" class="tab-item" id="tab-franchise">
+        <span class="tab-num num-3">3</span>
+        <span class="tab-en">FRANCHISE</span>
+        <span class="tab-zh">加盟資訊</span>
+      </a>
+      <a href="news.html" class="tab-item" id="tab-news">
+        <span class="tab-num num-4">4</span>
+        <span class="tab-en">NEWS</span>
+        <span class="tab-zh">最新消息</span>
+      </a>
+      <a href="location.html" class="tab-item" id="tab-location">
+        <span class="tab-num num-5">5</span>
+        <span class="tab-en">LOCATION</span>
+        <span class="tab-zh">分店據點</span>
+      </a>
+    </div>
+  </div>
+
+  <main class="order-page">
+    <div class="order-actions-bar">
+      <nav class="top-actions" aria-label="點餐導覽">
+        <button class="cart-pill" type="button" data-open-cart>
+          <span class="bag-icon" aria-hidden="true"></span>
+          <span>購物車</span>
+          <strong data-cart-count>0</strong>
+        </button>
+      </nav>
+    </div>
+
+    <section class="target-panel" data-target-panel hidden>
+      <div class="target-head">
+        <div>
+          <span class="eyebrow">Nutrition Target</span>
+          <h2>營養目標</h2>
+        </div>
+        <button class="text-button" type="button" data-apply-preset="fitness">套用健身增肌</button>
+      </div>
+      <div class="target-grid">
+        <label>
+          <span>熱量上限</span>
+          <input type="number" min="250" max="1200" step="10" value="650" data-target="calories">
+        </label>
+        <label>
+          <span>蛋白質下限</span>
+          <input type="number" min="0" max="100" step="1" value="35" data-target="protein">
+        </label>
+        <label>
+          <span>碳水上限</span>
+          <input type="number" min="0" max="160" step="1" value="65" data-target="carbs">
+        </label>
+        <label>
+          <span>脂肪上限</span>
+          <input type="number" min="0" max="80" step="1" value="28" data-target="fat">
+        </label>
+      </div>
+    </section>
+
+    <section class="builder-layout" aria-label="客製彩碗點餐區">
+
+      <section class="ingredient-panel">
+        <div class="step-tabs" role="tablist" aria-label="食材分類" data-tabs></div>
+        <div class="ingredient-toolbar">
+          <div>
+            <span class="eyebrow" data-step-kicker>Step 1</span>
+            <h2 data-step-title>選主食</h2>
+            <p class="nutrition-note">* 此為課堂專題估算值，非彩碗官方營養標示。實際熱量可能因份量、醬汁與調理方式不同而有約 ±10–25% 誤差。</p>
+          </div>
+          <p data-step-hint>可選 1 到 2 種，選 2 種時各以半份計算。</p>
+        </div>
+        <div class="ingredient-grid" data-ingredients></div>
+      </section>
+
+      <aside class="summary-panel" id="mobile-bowl-details" aria-live="polite" data-mobile-bowl-details>
+        <div class="panel-head">
+          <span class="eyebrow">Your Bowl</span>
+          <h2>目前這碗</h2>
+          <button class="mobile-summary-close icon-button" type="button" data-mobile-summary-close aria-label="關閉目前這碗">
+            <span class="close-icon" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="price-line">
+          <span>總價</span>
+          <strong data-total-price>$0</strong>
+        </div>
+        <div class="nutrition-grid">
+          <div>
+            <span>熱量</span>
+            <strong data-total="calories">0</strong>
+            <small>kcal</small>
+          </div>
+          <div>
+            <span>蛋白質</span>
+            <strong data-total="protein">0</strong>
+            <small>g</small>
+          </div>
+          <div>
+            <span>碳水</span>
+            <strong data-total="carbs">0</strong>
+            <small>g</small>
+          </div>
+          <div>
+            <span>脂肪</span>
+            <strong data-total="fat">0</strong>
+            <small>g</small>
+          </div>
+        </div>
+        <div class="target-status" data-target-status></div>
+        <div class="selected-list" data-selected-list>
+          <p>還沒有選食材。</p>
+        </div>
+        <label class="note-field">
+          <span>備註</span>
+          <textarea rows="3" placeholder="例如：醬另外放、不要洋蔥" data-note></textarea>
+        </label>
+        <div class="summary-actions">
+          <button class="ghost-button" type="button" data-reset>
+            <span class="reset-icon" aria-hidden="true"></span>
+            <span>重選</span>
+          </button>
+          <button class="primary-button" type="button" data-add-cart>
+            <span class="plus-icon" aria-hidden="true"></span>
+            <span>加入購物車</span>
+          </button>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <aside class="cart-drawer" aria-label="購物車" aria-hidden="true" data-cart-drawer>
+    <div class="cart-backdrop" data-close-cart></div>
+    
+    <!-- 訂單明細面板 (向左展開) -->
+    <section class="details-panel" data-details-panel>
+      <div class="details-head">
+        <div>
+          <span class="eyebrow">Details</span>
+          <h2>訂單明細</h2>
+        </div>
+        <button class="icon-button" type="button" data-close-details aria-label="關閉明細">
+          <span class="close-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="details-items">
+        <!-- 這裡由 JS 動態渲染 Accordion 項目 -->
+      </div>
+    </section>
+
+    <section class="cart-panel">
+      <!-- 左側貼邊 Sidebar Toggle 滑塊 -->
+      <div class="sidebar-toggle-container" data-expand-container hidden>
+        <button class="details-sidebar-toggle" type="button" data-toggle-cart-details aria-label="切換訂單明細">
+          <span class="sidebar-toggle-text">展開明細</span>
+          <span class="sidebar-toggle-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="cart-head">
+        <div>
+          <span class="eyebrow">Cart</span>
+          <h2>訂單內容</h2>
+        </div>
+        <div class="cart-head-actions">
+          <button class="clear-cart-btn" type="button" data-clear-cart hidden>清空購物車</button>
+          <button class="icon-button" type="button" data-close-cart aria-label="關閉購物車">
+            <span class="close-icon" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+      <div class="sidebar-toggle-container mobile-cart-detail-toggle" data-expand-container hidden>
+        <button class="details-sidebar-toggle" type="button" data-toggle-cart-details aria-label="切換訂單明細">
+          <span class="sidebar-toggle-text">展開明細</span>
+          <span class="sidebar-toggle-icon" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="cart-items" data-cart-items>
+        <p class="empty-cart">購物車目前是空的。</p>
+      </div>
+      <div class="checkout-box">
+        <div class="checkout-total">
+          <span>訂單總計</span>
+          <strong data-cart-total>$0</strong>
+        </div>
+
+
+        <div class="checkout-grid">
+          <label>
+            <span>取餐方式</span>
+            <select>
+              <option>到店自取</option>
+              <option>外送</option>
+              <option>內用</option>
+            </select>
+          </label>
+          <label>
+            <span>取餐時間</span>
+            <input type="time" value="12:30">
+          </label>
+          <label>
+            <span>姓名</span>
+            <input type="text" id="checkout-name" placeholder="王小明">
+          </label>
+          <label>
+            <span>電話</span>
+            <input type="tel" id="checkout-phone" placeholder="09xx xxx xxx">
+          </label>
+        </div>
+        <button class="primary-button checkout-button" type="button" data-submit-order>
+          <span class="send-icon" aria-hidden="true"></span>
+          <span>送出模擬訂單</span>
+        </button>
+      </div>
+    </section>
+  </aside>
+
+  <div class="mobile-summary">
+    <button class="mobile-summary-info" type="button" data-mobile-summary-toggle aria-expanded="false" aria-controls="mobile-bowl-details">
+      <span class="mobile-summary-title">目前這碗</span>
+      <strong data-mobile-price>$0</strong>
+      <span data-mobile-nutrition>0 kcal / P 0g</span>
+      <span class="mobile-summary-chevron" aria-hidden="true"></span>
+    </button>
+    <button class="mobile-add-button" type="button" data-add-cart data-add-cart-mode="stay">加入</button>
+  </div>
+
+  <div class="toast" data-toast role="status" aria-live="polite"></div>
+</body>
+</html>
