@@ -84,6 +84,7 @@
   let activeMode = "relaxed";
   let editingId = "";
   let toastTimer = 0;
+  const orderTabId = `order-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
   const byId = new Map(ingredients.map((item) => [item.id, item]));
   const byName = new Map(ingredients.map((item) => [item.name, item]));
@@ -98,6 +99,7 @@
     renderIngredients();
     bindActions();
     const lineBotApplied = applyLineBotRecommendation();
+    startOrderTabSync();
     const hasSavedBowl = localStorage.getItem("colorbowl_current_bowl");
     if (lineBotApplied) {
       saveSelectedToStorage();
@@ -108,6 +110,47 @@
     }
     updateAll();
     renderCart();
+  }
+
+  function startOrderTabSync() {
+    markOrderTabActive();
+    window.setInterval(markOrderTabActive, 2000);
+    window.addEventListener("beforeunload", clearOrderTabActive);
+    window.addEventListener("storage", (event) => {
+      if (event.key !== "colorbowl_cart") return;
+      loadCartFromStorage();
+      renderCart();
+    });
+  }
+
+  function markOrderTabActive() {
+    try {
+      localStorage.setItem("colorbowl_order_active_tab", JSON.stringify({ id: orderTabId, at: Date.now() }));
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function clearOrderTabActive() {
+    try {
+      const active = readActiveOrderTab();
+      if (active?.id === orderTabId) localStorage.removeItem("colorbowl_order_active_tab");
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function readActiveOrderTab() {
+    try {
+      return JSON.parse(localStorage.getItem("colorbowl_order_active_tab") || "null");
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function hasOpenOrderTab() {
+    const active = readActiveOrderTab();
+    return Boolean(active?.id && active.id !== orderTabId && Date.now() - active.at < 12000);
   }
 
   function applyLineBotRecommendation() {
@@ -136,10 +179,12 @@
     const noteArea = document.querySelector("[data-note]");
     if (noteArea) noteArea.value = params.get("note") || "LINE Bot AI 推薦餐盒";
 
+    const shouldReturnToOpenTab = params.get("autoAdd") === "1" && hasOpenOrderTab();
     if (params.get("autoAdd") === "1") {
       addLineBotBowlToCart();
       selected.clear();
       if (noteArea) noteArea.value = "";
+      if (shouldReturnToOpenTab) closeDuplicateLineBotTab();
     }
 
     window.history.replaceState({}, document.title, `${window.location.pathname}${window.location.hash}`);
@@ -173,6 +218,26 @@
 
     saveCartToStorage();
     showToast("LINE Bot 推薦餐盒已加入購物車。");
+  }
+
+  function closeDuplicateLineBotTab() {
+    showToast("推薦餐盒已加入已開啟的購物車。");
+    window.setTimeout(() => {
+      window.close();
+      showDuplicateTabMessage();
+    }, 700);
+  }
+
+  function showDuplicateTabMessage() {
+    if (document.querySelector(".linebot-close-message")) return;
+    const panel = document.createElement("div");
+    panel.className = "linebot-close-message";
+    panel.setAttribute("role", "status");
+    panel.innerHTML = `
+      <strong>推薦餐盒已加入購物車</strong>
+      <span>你原本開著的點餐頁已同步更新。若此分頁沒有自動關閉，可以直接關閉它。</span>
+    `;
+    document.body.appendChild(panel);
   }
 
   function bindActions() {
